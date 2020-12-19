@@ -13,9 +13,9 @@ def RealTimePrice(crypto, currency="USD"):
     # you want the prices to be based-on (tsyms)
     # then add your API_KEY in the marked section
     TARGET_URL_REQUEST = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,XRP&tsyms=USD,\
-  EUR&api_key='API_KEY'
+  EUR&api_key= API_KEY'
 
-    # Using the get() method in requests library and passing our api-included url,
+    # Using the get() method in requests library and passing our url,
     #  we can ask for raw data
     dest = requests.get(TARGET_URL_REQUEST)
     # Now using json() method, we turn that raw data into (my all time favorite) JSON format
@@ -33,14 +33,13 @@ def main():
     symbol = input("enter the desired crypto symbol ")
 
     # Processing the symbol
-    if symbol == "BTC" or symbol == "ETH" or symbol == "XRP":
+    if symbol in {'BTH','ETH','XRP'}:
         # "last_price" is going to be the container for the returned price
         # by the function
 
-        # Making sure it's 0
         last_price = 0
 
-        # Using a loop is for repeated price displaying
+        # displaying price repeatedly 
         while True:
 
             # Using sleep() method in time library to avoid too much requests
@@ -48,11 +47,10 @@ def main():
             # will result in your disappointment :(
             time.sleep(60)
 
-            # Using our function and assigning it to 'current_price'
+            # Using our function and assigning the returned value to 'current_price'
             current_price = RealTimePrice(symbol)
 
-            # Stopping the display of unchanged prices
-            # this part is based on personal taste
+            # Maybe you prefer to only see prices when changed
             if current_price == last_price:
                 continue
             else:
